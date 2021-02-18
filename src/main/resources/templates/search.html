@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search</title>
+     <div th:replace="fragments :: header"/>
+</head>
+<body>
+<div th:replace="fragments :: navigation"/>
+<div class="container">
+    <div class="bg-light p-5 rounded-lg m-3">
+        <h1 class="mb-4">Search New York Times:</h1>
+        <form th:action="@{/search}" method="post">
+        <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Keywords:</span>
+            <input type="text" class="form-control" th:value="${searchText}" name="searchText">
+            <button class="btn btn-outline-success" type="submit" id="button-addon2">Search!</button>
+        </div>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments :: footer"/>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search</title>
+    <div th:replace="fragments :: header"/>
+</head>
+<body>
+<div th:replace="fragments :: navigation"/>
+<div class="container">
+    <div class="bg-light p-5 rounded-lg m-3">
+        <h1 class="mb-4">Search New York Times:</h1>
+        <form th:action="@{/search}" method="post">
+            <div class="input-group input-group-lg mb-4">
+                <span class="input-group-text" id="inputGroup-sizing-lg">Keywords:</span>
+                <input type="text" class="form-control" th:value="${searchText}" name="searchText">
+                <button class="btn btn-outline-success" type="submit" id="button-addon2">Search!</button>
+            </div>
+        </form>
+        <div class="card mb-3" th:each="doc: ${docList}">
+            <div class="row g-0">
+                <div class="col-md-3">
+                    <img th:src="${doc.imageUrl}" alt="..." class="rounded float-start" height="165">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${doc.headline.main}"></h5>
+                        <p class="card-text" th:text="${doc.summary}"></p>
+                        <p class="card-text"><small
+                                class="text-muted"
+                                th:text="${doc.section} + ' -- Published: ' + ${doc.pub_date}"></small></p>
+                        <a th:href="${doc.url}" class="stretched-link" th:target="_blank"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div th:replace="fragments :: footer"/>
+</body>
+</html>
