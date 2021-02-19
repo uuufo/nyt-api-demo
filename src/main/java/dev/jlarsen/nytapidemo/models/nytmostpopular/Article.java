@@ -23,6 +23,22 @@ public class Article {
 
     private String imageUrl;
 
+    public Article(Long id, String url, String section, String subsection, String byline, String title, String summary, Media[] media, String imageUrl) {
+        this.id = id;
+        this.url = url;
+        this.section = section;
+        this.subsection = subsection;
+        this.byline = byline;
+        this.title = title;
+        this.summary = summary;
+        this.media = media;
+        this.imageUrl = imageUrl;
+    }
+
+    public Article(String title) {
+        this.title = title;
+    }
+
     public Long getId() {
         return id;
     }

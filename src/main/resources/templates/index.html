@@ -11,12 +11,13 @@
         <div class="d-grid gap-1">
             <a class="btn btn-success btn-lg" href="/register" role="button">Click here to register</a><br/>
         </div>
-        <h1 class="display-4">Today's Most Popular Stories</h1></p>
-        <th:block th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(articleList, 4)}">
+        <h1 class="display-4">Today's Most Popular Stories</h1>
+        <th:block th:unless="${articleList.isEmpty()}"
+                  th:with="partitions=${T(org.apache.commons.collections4.ListUtils).partition(articleList, 4)}">
             <div class="row" th:each="partition: ${partitions}">
                 <div class="col" th:each="article: ${partition}">
                     <div class="card" style="width: 18rem; height: 34rem;">
-                        <img th:src="${article.imageUrl}" class="card-img-top" alt="...">
+                        <img th:unless="${article.imageUrl == null}" th:src="${article.imageUrl}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${article.title}">title</h5>
                             <p class="card-text" th:text="${article.summary}">summary</p>

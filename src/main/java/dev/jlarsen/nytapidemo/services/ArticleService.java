@@ -4,10 +4,11 @@ import dev.jlarsen.nytapidemo.models.nytmostpopular.Article;
 import dev.jlarsen.nytapidemo.models.nytmostpopular.Media;
 import dev.jlarsen.nytapidemo.models.nytmostpopular.NytResponse;
 import dev.jlarsen.nytapidemo.models.nytsearch.Doc;
+import dev.jlarsen.nytapidemo.models.nytsearch.Headline;
 import dev.jlarsen.nytapidemo.models.nytsearch.NytSearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -16,43 +17,61 @@ import java.util.List;
 @Service
 public class ArticleService {
 
-    private final String mostPopularUrl = "https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?";
-    private final String searchUrl = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=";
-    private final String apikey = "$api_key;";
+    /**
+     * Pull our values from applications.properties
+     */
+    @Value("${api_key}")
+    private String apikey;
+
+    @Value("${mostPopularUrl}")
+    private String mostPopularUrl;
+
+    @Value("${searchUrl}")
+    private String searchUrl;
 
     @Autowired
     RestTemplate restTemplate;
 
-    public void getMostPopular(Model model) {
+    /**
+     * Query NYT "Most Popular" API and map response
+     * @return List of Articles
+     */
+    public List<Article> getMostPopular() {
         NytResponse response = null;
         try {
             response = restTemplate.getForObject(mostPopularUrl + apikey, NytResponse.class);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        List<Article> articles = new ArrayList<>();
         if (response != null && response.getStatus().equals("OK")) {
             Article[] allArticles = response.getResults();
-            List<Article> articles = new ArrayList<>();
             for (Article article : allArticles) {
                 if (article.getMedia().length > 0) {
                     article.setImageUrl(article.getMedia()[0].getMedia_metadata()[1].getUrl());
                     articles.add(article);
                 }
             }
-            model.addAttribute(articles);
+        } else {
+            articles.add(new Article("Sorry, having trouble fetching Most Popular.."));
         }
+        return articles;
     }
 
-    public void getSearchResults(Model model, String searchText) {
+    /**
+     * Query NYT Search API and map response
+     * @return List of "Docs"
+     */
+    public List<Doc> getSearchResults(String searchText) {
         NytSearchResponse response = null;
         try {
             response = restTemplate.getForObject(searchUrl + searchText + "&" + apikey, NytSearchResponse.class);
         } catch (Exception ex) {
-        System.out.println(ex.getMessage());
+            System.out.println(ex.getMessage());
         }
+        List<Doc> docs = new ArrayList<>();
         if (response != null && response.getStatus().equals("OK")) {
             Doc[] allDocs = response.getResponse().getDocs();
-            List<Doc> docs = new ArrayList<>();
             for (Doc doc : allDocs) {
                 if (doc.getMultimedia().length > 0) {
                     for (Media media : doc.getMultimedia()) {
@@ -66,7 +85,9 @@ public class ArticleService {
                     docs.add(doc);
                 }
             }
-            model.addAttribute(docs);
+        }  else {
+            docs.add(new Doc(new Headline("Sorry, having trouble fetching search results..")));
         }
+        return docs;
     }
 }

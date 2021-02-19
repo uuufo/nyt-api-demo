@@ -16,10 +16,11 @@
                 <button class="btn btn-outline-success" type="submit" id="button-addon2">Search!</button>
             </div>
         </form>
-        <div class="card mb-3" th:each="doc: ${docList}">
+        <div class="card mb-3" th:unless="${docList.isEmpty()}" th:each="doc: ${docList}">
             <div class="row g-0">
                 <div class="col-md-3">
-                    <img th:src="${doc.imageUrl}" alt="..." class="rounded float-start" height="165">
+                    <img th:unless="${doc.imageUrl == null}" th:src="${doc.imageUrl}" alt="..."
+                         class="rounded float-start" height="165">
                 </div>
                 <div class="col-md-9">
                     <div class="card-body">
@@ -35,6 +36,6 @@
         </div>
     </div>
 </div>
-    <div th:replace="fragments :: footer"/>
+<div th:replace="fragments :: footer"/>
 </body>
 </html>

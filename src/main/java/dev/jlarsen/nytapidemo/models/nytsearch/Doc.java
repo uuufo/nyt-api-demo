@@ -29,6 +29,22 @@ public class Doc {
 
     private String imageUrl;
 
+    public Doc(String url, String section, String subsection, Byline byline, Headline headline, String summary, Media[] multimedia, Date pub_date, String imageUrl) {
+        this.url = url;
+        this.section = section;
+        this.subsection = subsection;
+        this.byline = byline;
+        this.headline = headline;
+        this.summary = summary;
+        this.multimedia = multimedia;
+        this.pub_date = pub_date;
+        this.imageUrl = imageUrl;
+    }
+
+    public Doc(Headline headline) {
+        this.headline = headline;
+    }
+
     public String getUrl() {
         return url;
     }
