@@ -10,11 +10,11 @@ public class Doc {
     @JsonProperty("web_url")
     private String url;
 
+    @JsonProperty("news_desk")
+    private String newsDesk;
+
     @JsonProperty("section_name")
     private String section;
-
-    @JsonProperty("subsection_name")
-    private String subsection;
 
     private Byline byline;
 
@@ -29,10 +29,10 @@ public class Doc {
 
     private String imageUrl;
 
-    public Doc(String url, String section, String subsection, Byline byline, Headline headline, String summary, Media[] multimedia, Date pub_date, String imageUrl) {
+    public Doc(String url, String section, String newsDesk, Byline byline, Headline headline, String summary, Media[] multimedia, Date pub_date, String imageUrl) {
         this.url = url;
         this.section = section;
-        this.subsection = subsection;
+        this.newsDesk = newsDesk;
         this.byline = byline;
         this.headline = headline;
         this.summary = summary;
@@ -61,12 +61,12 @@ public class Doc {
         this.section = section;
     }
 
-    public String getSubsection() {
-        return subsection;
+    public String getNewsDesk() {
+        return newsDesk;
     }
 
-    public void setSubsection(String subsection) {
-        this.subsection = subsection;
+    public void setNewsDesk(String newsDesk) {
+        this.newsDesk = newsDesk;
     }
 
     public Byline getByline() {

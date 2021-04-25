@@ -9,7 +9,7 @@
 <div class="container">
     <div class="bg-light p-4 rounded-lg mb-2">
         <div class="d-grid gap-1">
-            <a class="btn btn-success btn-lg" href="/register" role="button">Click here to register</a><br/>
+            <a class="btn btn-success btn-lg" th:href="@{/register}" role="button">Click here to register</a><br/>
         </div>
         <h1 class="display-4">Today's Most Popular Stories</h1>
         <th:block th:unless="${articleList.isEmpty()}"

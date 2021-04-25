@@ -8,6 +8,9 @@ public class Headline {
         this.main = main;
     }
 
+    public Headline() {
+    }
+
     public String getMain() {
         return main;
     }

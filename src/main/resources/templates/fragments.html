@@ -7,8 +7,8 @@
         <meta name="description" content="NYT Demo">
         <meta name="author" content="Jared Larsen">
         <!--    <link rel="icon" href="../../favicon.ico" />-->
-        <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
-        <link href="../static/css/main.css" rel="stylesheet" th:href="@{/css/main.css}"/>
+        <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main.css}"/>
     </div>
 </head>
 <body>
@@ -24,10 +24,10 @@
             <li class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/search">Search</a>
+                        <a class="nav-link" th:href="@{/search}">Search</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -40,7 +40,7 @@
                 </ul>
                 <form class="d-flex"  action="#" th:action="@{/logout}" method="post">
                     <div sec:authorize="isAuthenticated()">
-                        <a class="btn btn-success" href="/profile" role="button">Profile</a>
+                        <a class="btn btn-success" th:href="@{/profile}" role="button">Profile</a>
                         <input class="btn btn-outline-success" type="submit" value="Log out"/>
                     </div>
                     <div sec:authorize="isAnonymous()">

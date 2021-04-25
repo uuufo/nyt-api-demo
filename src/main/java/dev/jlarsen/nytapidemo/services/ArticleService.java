@@ -39,7 +39,7 @@ public class ArticleService {
     public List<Article> getMostPopular() {
         NytResponse response = null;
         try {
-            response = restTemplate.getForObject(mostPopularUrl + apikey, NytResponse.class);
+            response = restTemplate.getForObject(mostPopularUrl + "api-key=" + apikey, NytResponse.class);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -65,7 +65,7 @@ public class ArticleService {
     public List<Doc> getSearchResults(String searchText) {
         NytSearchResponse response = null;
         try {
-            response = restTemplate.getForObject(searchUrl + searchText + "&" + apikey, NytSearchResponse.class);
+            response = restTemplate.getForObject(searchUrl + searchText + "&" + "api-key=" + apikey, NytSearchResponse.class);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -79,8 +79,8 @@ public class ArticleService {
                             doc.setImageUrl("https://www.nytimes.com/" + media.getUrl());
                         }
                     }
-                    if (doc.getSubsection() != null) {
-                        doc.setSection(doc.getSection() + " " + doc.getSubsection());
+                    if (!doc.getNewsDesk().equals(doc.getSection())) {
+                        doc.setSection(doc.getNewsDesk() + " " + doc.getSection());
                     }
                     docs.add(doc);
                 }
